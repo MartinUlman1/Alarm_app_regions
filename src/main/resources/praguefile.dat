@@ -1,0 +1,86 @@
+﻿# UTF-8
+# Krizové hlášky Praha ###################################
+# Identifikace hlasky musi byt cislo (pripadne NONE)
+[PEVNE]
+-------- Pevná hláska nebyla vybrána;NONE
+Libovolný text;111
+Libovolný text;112
+Libovolný text;113
+Libovolný text;114
+Libovolný text;116
+Libovolný text;117
+Libovolný text;118
+Libovolný text;119
+Libovolný text;124;124
+Libovolný text;125;125
+Libovolný text;126;126
+Libovolný text;127;127
+Libovolný text;128;128
+Libovolný text;129;129
+Libovolný text;130;130
+Libovolný text;141;141
+Libovolný text;142;142
+Libovolný text;143;143
+#
+[UVODY]
+# Zde se zadavaji dve cisla fragmentu, prvni nema klesajici intonaci (nasleduje lokalita), druhy ma klesajici intonaci.
+Libovolný text;201;201
+Libovolný text;202;202
+Libovolný text;203;203
+Libovolný text;204;204
+Libovolný text;205;205
+Libovolný text;206;206
+Libovolný text;207;207
+Libovolný text;208;208
+Libovolný text;209;209
+Libovolný text;210;210
+Libovolný text;212;212
+Libovolný text;230;230
+Libovolný text;232;232
+Libovolný text;233;253
+Libovolný text;234;254
+Libovolný text;235;255
+VLibovolný text;236;256
+Libovolný text;237;257
+Libovolný text;238;258
+Libovolný text;239;259
+Libovolný text;240;260
+Libovolný text;241;261
+Libovolný text;242;242
+Libovolný text;243;243
+Libovolný text;244;244
+Libovolný text;245;245
+[CASY]
+-------- Časový údaj se nezadává;NONE
+[LOKALITY]
+Praha 1 - Staré město, Malá strana, Hradčany ; 311
+Praha 2 - Nové město, Vinohrady ; 312
+Praha 3 - Žižkov, Vinohrady ; 313
+Praha 4 - Nusle, Podolí, Braník, Krč, Michle ; 314
+Praha 5 - Smíchov, Košíře, Motol, Radlice ; 315
+Praha 6 - Dejvice, Střešovice, Vokovice, Liboc, Ruzyně ; 316
+Praha 7 - Holešovice, Bubeneč ; 317
+Praha 8 - Karlín, Kobylisy, Bohnice ; 318
+Praha 9 - Vysočany, Prosek, Hrdlořezy ; 319
+Praha 10 - Vršovice, Strašnice, Malešice ; 329
+Praha 11 - Chodov, Háje ; 330
+Praha 12 - Modřany, Libuš, Kamýk ; 331
+Praha 13 - Stodůlky, Jinonice, Třebonice, Řeporyje ; 332
+Praha 14 - Hloubětín, Černý most, Kyje, Hostavice ; 333
+Praha 15 - Hostivař, Horní Měcholupy ; 334
+Praha 16 - Radotín ; 335
+Praha 17 - Řepy, Zličín ; 336
+Praha 18 - Letňany ; 337
+Praha 19 - Kbely, Čakovice ; 338
+Praha 20 - Horní Počernice ; 339
+Praha 21 - Újezd nad Lesy ; 340
+Praha 22 - Uhříněves, Pitkovice ; 341
+
+--------;NONE
+[OMLUVY]
+Libovolný text;500
+Libovolný text;501
+Libovolný text;502
+Libovolný text;503
+Libovolný text;231;231
+--------;NONE

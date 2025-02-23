@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      th:replace="~{layout::page(~{::title},_,~{::main},~{::link},~{::script})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/stylesheet.css}">
+    <title>Nastavení krizových hlášek TESU</title>
+</head>
+
+<BODY BGCOLOR="#EDF0F1" TEXT="#000000" LINK="#0000FF" ALINK="#FF0000" VLINK="#FF00FF">
+<main class="container-fluid">
+    <STYLE>
+        .hid1 {
+            display: none;
+        }
+
+        .unhid1 {
+            display: inline;
+        }
+    </STYLE>
+    <H1 align="center">Krizove hlasky TESU - FIX - <span th:text="${department}"></span></H1>
+    <P ALIGN="right">
+        <A HREF="..">Zpět na výchozí stránku</A>
+    </P>
+
+    <p>
+        <SPAN STYLE="float: right; width: 26%;"></SPAN>
+
+    <div id="messageDisplayArea"
+         style="background-color: blue; color: white; padding: 10px; margin-bottom: 20px;"
+         th:if="${message}">
+        <pre th:text="${message}"></pre>
+    </div>
+
+    <form id="delete" th:action="@{/region/praha/deletedata}" method="post">
+        <input type="hidden" value="0NTO2" name="ivrParmValue"/>
+        <input type="submit" class="btn btn-primary btn-block" value="Vypnout dosud nasazenou krizovou hlasku"/>
+    </form>
+    <H1>Zadavani</H1>
+
+    <H2>&nbsp;&nbsp;&nbsp;&nbsp;Pevna hlaska</H2>
+    <form id="hlasky" th:action="@{/region/praha/processform}" method="post">
+        <TABLE BORDER="3" STYLE="background-color: #FFFFFF">
+            <TR>
+                <TH STYLE="text-align:left;">
+                    <div th:each="ss, iterStat : ${pevneHlasky}">
+                        <input type="radio" name="Pevna_hlaska" th:value="${ss.values[0]}"
+                               th:id="${iterStat.index == 0 && ss.values[0] == 'NONE' ? 'pevna_neni' : null}"/>
+                        <span th:text="${ss.key}"></span><br/>
+                    </div>
+                </TH>
+            </TR>
+        </TABLE>
+        <BR>
+
+        <H2>&nbsp;&nbsp;&nbsp;&nbsp;Skladana hlaska</H2>
+        <TABLE BORDER="3">
+            <TR>
+                <TH>
+                    <INPUT TYPE="checkbox" NAME="Skladana_ANO" VALUE="1" Id="C" onClick="ChangeView('C','schovane')">Skladana
+                    hlaska <BR> se pouzije
+                </TH>
+                <TH STYLE="text-align:left;" Id="schovane" class="hid1">
+                    <H3 STYLE="background-color:#CECEFF">uvodni cast</H3>
+                    <SELECT NAME="UVOD" SIZE="9">
+                        <option th:each="ss, iterStat : ${uvody}" th:value="${ss.values[0]}"
+                                th:selected="${iterStat.index == 0}">
+                            <span th:text="${ss.key}"></span><br/>
+                        </option>
+                    </SELECT>
+
+                    <!-- ... -->
+                    <H3 STYLE="background-color:#CECEFF">Lokalita</H3>
+                    <SELECT NAME="LOKALITA" SIZE="12" MULTIPLE onchange="updateSelectedValues(this)">
+                        <option th:each="ss, iterStat : ${lokality}" th:value="${ss.values[0]}"
+                                th:selected="${iterStat.index == lokality.size() - 1}">
+                            <span th:text="${ss.key}"></span><br/>
+                        </option>
+                    </SELECT>
+                    <p id="selectedValues"></p>
+                    <SPAN STYLE="float: none; position: relative;  top: -110" ;>Kliknutim s klavesou Ctrl
+                je mozno vybrat az 3 lokality.</FONT></SPAN>
+                    <!-- ... -->
+                    <H3 STYLE="background-color:#CECEFF">Časový údaj</H3>
+                    <div th:each="ss, iterStat : ${casy}">
+                        <input type="radio" name="CASY" th:value="${ss.values[0]}"
+                               th:selected="${iterStat.index == 0}">
+                        <span th:text="${ss.key}"></span><br/>
+                        <INPUT TYPE="radio" NAME="CASY" VALUE="calendar" CHECKED>
+                        <select name="DAY" size="2">
+                            <option th:each="date, iterStat : ${dates}" th:value="${date.key}" th:text="${date.value}"
+                                    th:selected="${iterStat.index == 0}"></option>
+                        </select>
+                        <select name="HOUR" size="8">
+                            <option th:each="hour, iterStat : ${hours}" th:value="${hour.key}" th:text="${hour.value}"
+                                    th:selected="${iterStat.index == 0}"></option>
+                        </select>
+                    </div>
+                    <SPAN STYLE="float: none; position: relative;  top: -110" ;>Casovy udaj uslysi zakaznik v IVR,
+                ale je to take doba, kdy se hlaska prestane prehravat.</FONT></SPAN>
+                    <!-- ... -->
+                    <H3 STYLE="background-color:#CECEFF">Omluvy a rozloučení</H3>
+                    <SELECT NAME="OMLUVY" SIZE="3">
+                        <option th:each="ss, iterStat : ${omluvy}" th:value="${ss.values[0]}"
+                                th:selected="${iterStat.index == omluvy.size() - 1}">
+                            <span th:text="${ss.key}"></span><br/>
+                        </option>
+                    </SELECT>
+                    <BR><BR>
+                </TH>
+            </TR>
+        </TABLE>
+        <BR><BR>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+        <button type="submit" class="btn btn-primary btn-block">Sestavit krizovou hlášku</button>
+    </form>
+
+    <H4 align="center">Nahrání souboru typu .wav</H4>
+    <div>
+        1. Pokud již más vhodný soubor .wav s krizovou hláškou na disku, najdeš ho tlačítkem Vybrat soubor. <BR>
+        2.Pokud soubor nemáš, vyrobí ti ho ochotně Text2Audio. Uložíš si ho na svůj disk, přejmenuješ na něco rozumného
+        a
+        několikrát poslechneš,
+        aby ses ujistil, že něco takového mohou poslouchat zákazníci. Pak budeš postupovat dle bodu 1. <BR>
+        3. Po stisknutí tlačítka se hláška nahraje a ihned aktivuje. <BR>
+        <form id="upload" th:action="@{/region/praha/upload}" method="post" enctype="multipart/form-data">
+            <th:block>
+                <input type="hidden" name="pozadavek" value="1"/>
+            </th:block>
+            <p align="right"><a href="https://ntctigent406.to2.to2cz.cz:8004/">Text2Audio</a></p>
+            TESU FIX : <input type="file" name="file" size="50" required>
+            <br><br>
+            <input type="submit" class="btn btn-primary btn-block" value="Nahrát soubor .wav">
+        </form>
+    </div>
+</main>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/jquery-resizable-columns/dist/jquery.resizableColumns.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-table/dist/bootstrap-table.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-table/dist/bootstrap-table-locale-all.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-table/dist/extensions/resizable/bootstrap-table-resizable.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-table/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-control.min.js}"></script>
+
+<script language="javascript">
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        if (message) {
+            document.getElementById('messageDisplayArea').style.display = 'block';
+            document.getElementById('messageValue').innerText = message;
+        }
+    })
+
+    function addConfirmSubmit(forName) {
+        var form = document.getElementById(forName);
+        form.addEventListener("submit", function (event) {
+            const confirmed = window.confirm("Opravdu chcete změnit hlášku ? ");
+            if (!confirmed) {
+                event.preventDefault();
+            }
+        })
+    }
+
+    addConfirmSubmit('hlasky');
+    addConfirmSubmit('delete');
+    addConfirmSubmit('upload');
+
+    function updateSelectedValues(selectElement) {
+        const selectedOptions = Array.from(selectElement.selectedOptions);
+        if (selectedOptions.length > 3) {
+            alert("Můžete vybrat maximálně 3 položky.");
+            selectElement.selectedOptions[3].selected = false;
+            return;
+        }
+        const selectedValues = selectedOptions.map(option => option.value).join(', ');
+        document.getElementById('selectedValues').innerText = selectedValues;
+    }
+
+
+    function ChangeView(this_id, that_id) {
+        if (document.getElementById(this_id).checked) {
+            document.getElementById(that_id).className = 'unhid1';
+        } else {
+            document.getElementById(that_id).className = 'hid1';
+        }
+    }
+
+</script>
+
+</BODY>
+</html>

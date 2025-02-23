@@ -1,0 +1,170 @@
+@import url('/webjars/bootstrap/css/bootstrap.min.css');
+@import url('/webjars/jquery-resizable-columns/dist/jquery.resizableColumns.css');
+@import url('/webjars/bootstrap-table/dist/bootstrap-table.min.css');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css');
+@import url('/webjars/bootstrap-icons/font/bootstrap-icons.css');
+@import url('/webjars/bootstrap-table/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.css');
+@import url('/webjars/bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-control.min.css');
+
+.bordered-section {
+    border: 2px solid #1a3ce1;
+    padding: 0; /* Reduced padding */
+    margin: auto; /* Reduced and centered margin */
+    border-collapse: collapse;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #1a3ce1;
+    max-width: 100%; /* Control the maximum width */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+.bordered-section-sazka {
+    border: 2px solid #e6bd0d;
+    padding: 0; /* Reduced padding */
+    margin: auto; /* Reduced and centered margin */
+    border-collapse: collapse;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #e6bd0d;
+    max-width: 100%; /* Control the maximum width */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+.bordered-form .form-check,
+.bordered-form .form-check-input,
+.bordered-form .form-check-label {
+    max-width: 100%;
+    box-sizing: border-box;
+
+}
+
+.form-check:hover .hidden-text {
+    display: inline;
+
+}
+
+/* Define a CSS class for bordered form */
+.form-bordered {
+    border: 2px solid #007bff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.hidden-text {
+    display: none;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    width: 300px;
+    text-align: left;
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    pointer-events: none;
+    left: 100%; /* Position to the right of the parent element */
+    margin-left: 10px;
+}
+
+.form-check {
+    position: relative;
+}
+
+.bordered-form .form-check-input {
+    margin-right: 20px;
+}
+
+.btn-block {
+    margin: 20px;
+}
+
+.bordered-form .form-check {
+    display: flex;
+    align-items: flex-start;
+}
+
+.reportable-highlight {
+    color: blue;
+}
+
+/* Adjust for different screen sizes */
+@media (max-width: 767px) {
+    .bordered-section {
+        padding: 5px;
+        margin: 5px auto;
+        max-width: 95%; /* Slightly wider on smaller screens */
+    }
+}
+
+@media (min-width: 768px) {
+    .bordered-section {
+        padding: 10px;
+        margin: 10px auto;
+        max-width: 90%; /* Adjusted for medium screens */
+    }
+}
+
+@media (min-width: 992px) {
+    .bordered-section {
+        padding: 15px;
+        margin: 15px auto;
+        max-width: 85%; /* Adjusted for large screens */
+    }
+}
+
+@media (min-width: 1200px) {
+    .bordered-section {
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 80%; /* Adjusted for extra large screens */
+    }
+}
+
+@media (max-width: 767px) {
+    .bordered-section-sazka {
+        padding: 5px;
+        margin: 5px auto;
+        max-width: 95%; /* Slightly wider on smaller screens */
+    }
+}
+
+@media (min-width: 768px) {
+    .bordered-section-sazka {
+        padding: 10px;
+        margin: 10px auto;
+        max-width: 90%; /* Adjusted for medium screens */
+    }
+}
+
+@media (min-width: 992px) {
+    .bordered-section-sazka {
+        padding: 15px;
+        margin: 15px auto;
+        max-width: 85%; /* Adjusted for large screens */
+    }
+}
+
+@media (min-width: 1200px) {
+    .bordered-section-sazka {
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 80%; /* Adjusted for extra large screens */
+    }
+}
+
+.user-info {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: aliceblue;
+}
+
+.header-title {
+    text-align: center;
+}
+
+.radio-highlight {
+    color: blue; /* Or use background-color for the background */
+}
+

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      th:replace="~{layout::page(~{::title},_,~{::main},~{::link},~{::script})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/stylesheet.css}">
+    <title>Nastavení krizových hlášek na Prepaid IVR</title>
+
+
+</head>
+
+<body>
+<main class="container-fluid">
+    <h1 align="center">Nastavení krizových hlášek na Prepaid IVR - <span th:text="${department}"></span></h1>
+    <P ALIGN="right">
+        <A HREF="..">Zpět na výchozí stránku</A>
+    </P>
+    <p>
+    <SPAN STYLE="float: right; width: 26%;">
+Přesný text hlášky si můžete zobrazit najetím myši na konkrétní hlášku.
+</SPAN>
+    </p><br><br><br>
+
+    <div id="messageDisplayArea"
+         style="background-color: blue; color: white; padding: 10px; margin-bottom: 20px; display: none">
+        <span id="messageValue"></span>
+    </div>
+    <h4 align="center">GOL_1 - Hláška na začátku po volbě mobilního IVR</h4>
+    <div class="bordered-section">
+        <form id="formKAR1" class="bordered-form" th:action="@{/region/karlovarsky/storekarlovdata}" method="post">
+            <input type="hidden" name="ivrReg" value="KAR_1">
+            <div class="form-check" th:each="entry : ${valueList}">
+                <th:block>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="ivrValue" th:value="${entry.key}"
+                               th:checked="${entry.key == activatedValueForKar1}">
+                        <label class="form-check-label" th:class="${entry.key == activatedValueForKar1} ?
+                        'radio-highlight' : null" th:text="${entry.value}"></label>
+                        <span class="hidden-text" th:text="${valueText.get(entry.key)}"></span><br>
+                    </div>
+                </th:block>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block"> Nastavit Karlovarský_1</button>
+        </form>
+    </div>
+
+    <h4 align="center">GOL_2 - Hláška před přepojením na operátora</h4>
+    <div class="bordered-section">
+        <form id="formKAR2" class="bordered-form" th:action="@{/region/karlovarsky/storekarlovdata}" method="post">
+            <input type="hidden" name="ivrReg" value="KAR_2">
+            <div class="form-check" th:each="entry : ${valueList}">
+                <th:block>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="ivrValue" th:value="${entry.key}"
+                               th:checked="${entry.key == activatedValueForKar2}">
+                        <label class="form-check-label" th:class="${entry.key == activatedValueForKar2} ?
+                        'radio-highlight' : null" th:text="${entry.value}"></label>
+                        <span class="hidden-text" th:text="${valueText.get(entry.key)}"></span><br>
+                    </div>
+                </th:block>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block"> Nastavit Karlovarský_2</button>
+        </form>
+    </div>
+
+
+    <H4 align="center">Nahrání souboru typu .wav</H4>
+    <div class="bordered-section">
+        1. Pokud již más vhodný soubor .wav s krizovou hláškou na disku, najdeš ho tlačítkem Vybrat soubor. <BR>
+        2.Pokud soubor nemáš, vyrobí ti ho ochotně Text2Audio. Uložíš si ho na svůj disk, přejmenuješ na něco rozumného
+        a
+        několikrát poslechneš,
+        aby ses ujistil, že něco takového mohou poslouchat zákazníci. Pak budeš postupovat dle bodu 1. <BR>
+        3. Po stisknutí tlačítka se hláška nahraje a ihned aktivuje. <BR>
+        <form id="formKAR3" th:action="@{/region/karlovarsky/upload}" method="post" enctype="multipart/form-data">
+            <div th:each="uploadValue : ${uploadValue}">
+                <th:block>
+                    <input type="hidden" name="pozadavek" th:value="${uploadValue.key}"/>
+                    <input type="hidden" name="speechfile" th:value="${uploadValue.value}"/>
+                </th:block>
+            </div>
+            <p align="right"><a th:href="${uploadVoice}">Text2Audio</a></p>
+            KAR 2 : <input type="file" name="file" size="50" required>
+            <br><br>
+            <input type="submit" name="submit" class="btn btn-primary btn-block" value="Nahrát soubor .wav">
+        </form>
+    </div>
+
+    <H5 align="center">Současný stav</H5>
+    <div th:each="ivrparm : ${ivrParms}">
+        <div th:if="${ivrparm.ivrRegPlace} != null and ${ivrparm.ivrRegValue} != null" align="center">
+            <span th:text="${ivrparm.ivrRegPlace}"></span> = <span th:text="${ivrparm.ivrRegValue}"></span>
+        </div>
+    </div>
+    <div style="position: fixed; bottom: 10px; right: 10px;">
+        <a href="/log/view?page=karlovarsky" target="_blank">View Log</a>
+    </div>
+</main>
+
+
+<script language="javascript">
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        if (message) {
+            document.getElementById('messageDisplayArea').style.display = 'block';
+            document.getElementById('messageValue').innerText = message;
+        }
+    })
+
+    function addConfirmSubmit(forName, forGol) {
+        var form = document.getElementById(forName);
+        form.addEventListener("submit", function (event) {
+            const confirmed = window.confirm("Opravdu chcete změnit " + forGol + " ? ");
+            if (!confirmed) {
+                event.preventDefault();
+            }
+        })
+    }
+
+    addConfirmSubmit('formKAR1', 'KAR_1');
+    addConfirmSubmit('formKAR2', 'KAR_2');
+    addConfirmSubmit('formKAR3', 'KAR_2');
+
+</script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

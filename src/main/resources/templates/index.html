@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout::page(~{::title},_,~{::main},~{::link},~{::script})}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/stylesheet.css}">
+    <title>Hlavní stránka</title>
+</head>
+
+<body>
+<main>
+    <div id="menuList" class="mb-3 mt-lg-3">
+        <ul>
+            <li th:each="entry: ${globalMenu}" th:data-sec-authorize-url="${entry.value.path}">
+                <a class="mb-2 fs-4" href="#"
+                   th:href="${entry.value.path}"
+                   th:text="${entry.value.text}">Menu entry</a>
+            </li>
+        </ul>
+    </div>
+</main>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

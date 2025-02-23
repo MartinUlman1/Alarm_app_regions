@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <title>Fragments</title>
+</head>
+
+<body>
+<main>
+    <header>
+        <div th:fragment="dropdownMenu" class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                Krizové hlášky
+            </a>
+
+            <ul class="dropdown-menu">
+                <li><a th:each="entry : ${globalMenu}" th:data-sec-authorize-url="${entry.value.path}"
+                       th:href="@{${entry.value.path}}" th:text="${entry.value.text}"
+                       class="dropdown-item"></a></li>
+            </ul>
+        </div>
+    </header>
+</main>
+</body>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</html>

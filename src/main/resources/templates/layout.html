@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="page(title, pageMenu, main, links, scripts)" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <th:block th:replace="${links}"/>
+
+    <title th:replace="${title}">Krizové hlášky</title>
+
+</head>
+<body>
+
+    <div class="navbar navbar-expand-sm navbar-dark" style="background-color: #0019a5">
+        <div id="menu" class="collapse navbar-collapse">
+            <div th:replace="~{fragments::dropdownMenu}">Dropdown menu</div>
+            <div class="navbar-nav" th:replace="${pageMenu}"></div>
+        </div>
+        <a id="user" class="navbar-brand mb-0 h1" th:text="${#authentication.principal.username}"/>
+        <a id="logout" class="navbar-brand mb-0" href="/logout">Odhlásit</a>
+    </div>
+
+<main th:replace="${main}">
+</main>
+<th:block th:replace="${scripts}"/>
+</body>
+</html>

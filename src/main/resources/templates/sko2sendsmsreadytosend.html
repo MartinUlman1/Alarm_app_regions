@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      th:replace="~{layout::page(~{::title},_,~{::main},~{::link},~{::script})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/stylesheet.css}">
+    <title>Zoznamy pripravene na odoslanie SMS</title>
+</head>
+
+<body>
+<main class="container-fluid">
+
+
+    <P ALIGN="right">
+        <A HREF="..">Zpět na výchozí stránku</A>
+    </P>
+    <h2 align="center">Zoznamy pripravene na odoslanie SMS - <span th:text="${department}"></span></h2>
+    <br>
+
+
+    <div class="mb-3">
+        <table id="table" class="table table-sm table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th>LINE</th>
+                <th>DESCRIPTION</th>
+                <th>START_DATE</th>
+                <th>END_DATE</th>
+                <th>COUNT_ALL</th>
+                <th>COUNT_SENT</th>
+                <th>STATUS</th>
+                <th>Ukončit</th>
+                <th>Nastavit SMS</th>
+                <th>Exportovat</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sms : ${sms}">
+                <td th:text="${sms.id}">ID</td>
+                <td th:text="${sms.line}">LINE</td>
+                <td th:text="${sms.description}">DESCRIPTION</td>
+                <td th:text="${sms.startDate}">START_DATE</td>
+                <td th:text="${sms.endDate}">END_DATE</td>
+                <td th:text="${sms.countAll}">COUNT_ALL</td>
+                <td th:text="${sms.countSent}">COUNT_SENT</td>
+                <td th:text="${sms.status}">STATUS</td>
+
+                <td>
+                    <form th:action="@{/khsk/smso2ready/delete}" method="post"
+                          onsubmit="return confirmDelete()">
+                        <input type="hidden" name="smsId" th:value="${sms.id}">
+                        <button type="submit" class="btn btn-danger">Ukončit</button>
+                    </form>
+                </td>
+
+
+                <td th:if="${msisdnIds.contains(sms.id)}">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sendSms">
+                        Nastavit SMS
+                    </button>
+                    <div class="modal fade" id="sendSms">
+                        <div class="modal-dialog">
+
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Nastavit SMS</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form th:action="@{/khsk/smso2ready/sendsms}" method="post">
+                                        <input type="hidden" name="smsId" th:value="${sms.id}">
+                                        <div class="form-group">
+                                            <label>Text pre SMS</label>
+                                            <input id="smsText" type="text" class="form-control" required="required"
+                                                   name="textSmsName">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>počet SMS v davke</label>
+                                            <input type="text" class="form-control"
+                                                   name="smsbatch" size="10">
+                                        </div>
+                                        <div class="form-group">
+                                            <input  type="submit" class="btn btn-success" value="Send">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td th:if="${msisdnIds.contains(sms.id)}">
+                    <form th:action="@{/khsk/smso2ready/exportnumber}" method="post">
+                        <input type="hidden" name="id" th:value="${sms.id}">
+                        <button type="submit" class="btn btn-danger">Stáhnout záznam</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+        </div>
+    </div>
+</main>
+
+
+<script>
+    function confirmDelete() {
+        return confirm("Opravdu chcete ukončit tuto SMS ?");
+    }
+
+    var myModal = document.getElementById('sendSms')
+    var myInput = document.getElementById('smsText')
+
+    myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+    })
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

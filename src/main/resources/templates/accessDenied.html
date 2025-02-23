@@ -1,0 +1,26 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout::page(~{::title},_,~{::main},~{::link},~{::script})}">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
+    <title>Přístup odepřen</title>
+</head>
+<body>
+
+<main class="container-fluid">
+    <h1>Přístup odepřen!</h1>
+    <P ALIGN="right">
+        <A HREF="..">Zpět na výchozí stránku</A>
+    </P>
+
+    <div class="mb-3">
+        <p>Přístup není nastaven nebo Vám chybí dostatečná práva</p>
+    </div>
+</main>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</body>
+</html>
